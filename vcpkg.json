@@ -1,0 +1,54 @@
+{
+  "name": "example",
+  "version-string": "latest",
+  "dependencies": [
+    "fmt",
+    "catch2",
+    "eigen3",
+    "argparse",
+    "spdlog",
+    "protobuf",
+    "nlohmann-json",
+    "paho-mqttpp3",
+    "asio"
+  ],
+  "builtin-baseline": "253704407ae68efa37bf8f5b59b3e06dd40d3d3f",
+  "overrides": [
+    {
+      "name": "fmt",
+      "version": "9.1.0"
+    },
+    {
+      "name": "catch2",
+      "version": "3.1.1#2"
+    },
+    {
+      "name": "eigen3",
+      "version": "3.4.0#2"
+    },
+    {
+      "name": "argparse",
+      "version": "2.8"
+    },
+    {
+      "name": "protobuf",
+      "version": "3.21.8"
+    },
+    {
+      "name": "nlohmann-json",
+      "version": "3.11.2"
+    },
+    {
+      "name": "paho-mqttpp3",
+      "version": "1.2.0#1"
+    },
+    {
+      "name": "spdlog",
+      "version": "1.10.0#1"
+    },
+    {
+      "name": "asio",
+      "version": "1.24.0"
+    }
+  ]
+}
