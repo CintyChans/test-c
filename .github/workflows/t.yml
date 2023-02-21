@@ -1,22 +1,18 @@
-name:  release
+name: c++ test
 
 on:
   push:
-    branches: "test"
-   
-
+    branches: [ "test"]
+  
 jobs:
   job:
-    permissions: write-all
     name: ${{ matrix.os }}-${{ github.workflow }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
-        os: [macos-12,ubuntu-22.04,windows-2022]
-    steps:
+        os: [windows-2022]
 
-      - uses: lukka/get-cmake@latest
-        with:
-          cmakeVersion: 3.24.3
-          ninjaVersion:  1.11.1
+    steps:
+      - uses: actions/checkout@v3
+       
