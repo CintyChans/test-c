@@ -1,8 +1,16 @@
 name: c++ application
 
 on:
+  workflow_call:
+    inputs:
+      config-path:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
   push:
-    branches: ["main", "test_action"]
+    branches: ["main"]
   
 jobs:
   job:
