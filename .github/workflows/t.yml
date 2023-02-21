@@ -14,7 +14,9 @@ jobs:
         os: [macos-12,ubuntu-22.04,windows-2022]
 
     steps:
-      - uses: CintyChans/octo-repo/.github/workflows/main.yml@main
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - uses: lukka/get-cmake@latest
         with:
