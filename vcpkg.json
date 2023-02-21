@@ -1,6 +1,4 @@
 {
-  "name": "example",
-  "version-string": "latest",
   "dependencies": [
     "fmt",
     "catch2",
