@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [macos-latest]
+        os: [macos-12,ubuntu-22.04,windows-2022]
 
     steps:
       - uses: actions/checkout@v3
@@ -27,34 +27,42 @@ jobs:
           cmakeVersion: 3.24.3
           ninjaVersion:  1.11.1
 
-
         
         #vcpkg下载所需包
       - name: run-vcpkg
         uses: lukka/run-vcpkg@v10
         id: runvcpkg
         with:
-          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          # This one is not needed, as it is the default value anyway.
+          # vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgJsonGlob: "vcpkg.json"
+          
+          
+      - name: add pkg-config for macos
+        if: matrix.os == 'macos-12'
+        run:  brew install pkg-config
 
         #cmake编译
       - name: Run CMake+vcpkg
         run: |
-          cmake . -B build -DEXECUTABLE_OUTPUT_PATH=target -G Ninja
+          cmake . -B build -DEXECUTABLE_OUTPUT_PATH=target 
           cd build
           cmake --build . --config Release
+
       #测试
       - name: CTest
         run: |
           cd build
           ctest --verbose -C Release -T test --output-on-failure
+
       #添加windows下vc库依赖
       - name: add  windows vcdll
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2022'
         run: |
           copy C:/Windows/system32/msvcp140*  ./build/target/Release
           copy C:/Windows/system32/vcruntime140*  ./build/target/Release
           copy C:/Windows/system32/ucrtbase*  ./build/target/Release
+
       - name: 7z
         uses: DuckSoft/create-7z-action@v1.0
         with:
@@ -83,6 +91,7 @@ jobs:
           os.system("echo 'NOTE<<EOF' >> $GITHUB_ENV")
           tmp=[os.system("echo '{}' >> $GITHUB_ENV".format(n.strip())) for n in note ]
           os.system("echo 'EOF' >> $GITHUB_ENV")
+
       - name: Create Release
         if: github.ref_type=='tag'
         uses: softprops/action-gh-release@v1
