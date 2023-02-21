@@ -2,6 +2,7 @@ name: c++ application release
 
 on:
   push:
+    branches: "test"
     tags:
       - v[0-9]+.[0-9]+
       - v[0-9]+.[0-9]+.[0-9]+
@@ -9,6 +10,7 @@ on:
 
 jobs:
   job:
+    permissions: write-all
     name: ${{ matrix.os }}-${{ github.workflow }}
     runs-on: ${{ matrix.os }}
     strategy:
