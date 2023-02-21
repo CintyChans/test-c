@@ -1,1 +1,22 @@
-hn 
+name: c++ application release
+
+on:
+  push:
+    branches: "test"
+   
+
+jobs:
+  job:
+    permissions: write-all
+    name: ${{ matrix.os }}-${{ github.workflow }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [macos-12,ubuntu-22.04,windows-2022]
+    steps:
+
+      - uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: 3.24.3
+          ninjaVersion:  1.11.1
