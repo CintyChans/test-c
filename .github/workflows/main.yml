@@ -38,6 +38,9 @@ jobs:
         run:  brew install pkg-config
 
 
+
+      - if: github.ref_type=='tag'
+        
       - name: Run CMake+vcpkg
         run: |
           cmake . -B build -DEXECUTABLE_OUTPUT_PATH=target 
