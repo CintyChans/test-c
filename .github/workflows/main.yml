@@ -1,11 +1,9 @@
 name: c++ application
 
 on:
-  workflow_call:
-  
   push:
-    branches: ["main"]
-  
+    branches: ["main", "test_action","test_vcpkg"]
+
 jobs:
   job:
     name: ${{ matrix.os }}-${{ github.workflow }}
@@ -19,32 +17,36 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
- 
+       
       - uses: lukka/get-cmake@latest
         with:
           cmakeVersion: 3.24.3
           ninjaVersion:  1.11.1
 
+        
+     
       - name: run-vcpkg
         uses: lukka/run-vcpkg@v10
         id: runvcpkg
         with:
           vcpkgDirectory: "${{ github.workspace }}/vcpkg"
           vcpkgJsonGlob: "vcpkg.json"
-               
+          
+          
       - name: add pkg-config for macos
-        if: matrix.os == 'macos-12'
+        if: matrix.os == "macos-12"
         run:  brew install pkg-config
 
- 
+
       - name: Run CMake+vcpkg
         run: |
           cmake . -B build -DEXECUTABLE_OUTPUT_PATH=target 
           cd build
           cmake --build . --config Release
- 
-      
+
+
       - name: CTest
         run: |
           cd build
           ctest --verbose -C Release -T test --output-on-failure
+
