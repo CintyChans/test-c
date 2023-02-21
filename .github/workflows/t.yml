@@ -1,8 +1,8 @@
-name: t
+name: c++ application release
 
 on:
-  push: 
-    branches: "main"
+  push:
+    branches: "test"
 
 jobs:
   job:
@@ -30,7 +30,7 @@ jobs:
           vcpkgJsonGlob: "vcpkg.json"
                   
       - name: add pkg-config for macos
-        if: matrix.os == "macos-12"
+        if: matrix.os == 'macos-12'
         run:  brew install pkg-config
 
       - name: Run CMake+vcpkg
@@ -45,7 +45,7 @@ jobs:
           ctest --verbose -C Release -T test --output-on-failure
     
       - name: add  windows vcdll
-        if: matrix.os == "windows-2022"
+        if: matrix.os == 'windows-2022'
         run: |
           copy C:/Windows/system32/msvcp140*  ${{ github.workspace }}/build/target/Release
           copy C:/Windows/system32/vcruntime140*  ${{ github.workspace }}/build/target/Release
