@@ -54,11 +54,7 @@ jobs:
           cd build
           ctest --verbose -C Release -T test --output-on-failure
           
-          
-          
-  after-deploy:
-    needs: deploy
-    runs-on: ubuntu-22.04
+
         
     steps:
       - uses: actions/checkout@v3
