@@ -9,7 +9,7 @@ on:
       - v[0-9]+.[0-9]+.[0-9]+.[0-9]+
 
 jobs:
-  job:
+  deploy:
     name: ${{ matrix.os }}-${{ github.workflow }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -54,16 +54,30 @@ jobs:
           cd build
           ctest --verbose -C Release -T test --output-on-failure
           
-      #添加windows下vc库依赖
+          
+          
+  after-deploy:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [macos-12,ubuntu-22.04,windows-2022]
+        
+    needs: [deploy]
+    if: github.ref_type=='tag'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2  
+        
+     #添加windows下vc库依赖
       - name: add  windows vcdll
-        if: matrix.os == 'windows-2022' &&  github.ref_type=='tag'
+        if: matrix.os == 'windows-2022' 
         run: |
           copy C:/Windows/system32/msvcp140*  ./build/target/Release
           copy C:/Windows/system32/vcruntime140*  ./build/target/Release
           copy C:/Windows/system32/ucrtbase*  ./build/target/Release
      
       - name: 7z
-        if: github.ref_type=='tag'
         uses: DuckSoft/create-7z-action@v1.0
         with:
           pathSource: ./build/target
@@ -71,20 +85,17 @@ jobs:
 
       #上传打包文件
       - name: Upload Artifacts
-        if: github.ref_type=='tag'
         uses: actions/upload-artifact@v3
         with:
           name: test-${{ matrix.os }}
           path: ${{ matrix.os }}.*
 
       - name: download-artifact
-        if: github.ref_type=='tag'
         uses: actions/download-artifact@v3
         with:
           path: ./artifact/
 
       - name: note
-        if: github.ref_type=='tag'
         shell: python
         run: |
           import os;f=open('releasenotes.md',"r");obj={i[0].strip():i[1:] for i in [i.split('-') for i in f.read().split('##')[1:]]};f.close()
@@ -94,7 +105,6 @@ jobs:
           os.system("echo 'EOF' >> $GITHUB_ENV")
           
       - name: Create Release
-        if: github.ref_type=='tag'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{github.ref_name}}
