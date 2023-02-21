@@ -34,7 +34,7 @@ jobs:
           
           
       - name: add pkg-config for macos
-        if: matrix.os == macos-12
+        if: matrix.os == 'macos-12'
         run:  brew install pkg-config
 
 
