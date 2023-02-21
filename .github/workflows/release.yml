@@ -2,7 +2,6 @@ name: c++ application release
 
 on:
   push:
-    branches: "test"
     tags:
       - v[0-9]+.[0-9]+
       - v[0-9]+.[0-9]+.[0-9]+
@@ -17,9 +16,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [macos-12,ubuntu-22.04,windows-2022]
-
     steps:
-      - uses: CintyChans/octo-repo/.github/workflows/main.yml@main
 
       - uses: lukka/get-cmake@latest
         with:
