@@ -57,13 +57,9 @@ jobs:
           
           
   after-deploy:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ubuntu-22.04]
+    needs: deploy
+    runs-on: ubuntu-22.04
         
-    needs: [deploy]
     steps:
       - uses: actions/checkout@v3
       
@@ -75,11 +71,7 @@ jobs:
           copy C:/Windows/system32/vcruntime140*  ./build/target/Release
           copy C:/Windows/system32/ucrtbase*  ./build/target/Release
      
-      - name: 7z
-        uses: DuckSoft/create-7z-action@v1.0
-        with:
-          pathSource: ./build/target
-          pathTarget: ${{ matrix.os }}.tar
+
 
       #上传打包文件
       - name: Upload Artifacts
@@ -91,7 +83,7 @@ jobs:
       - name: download-artifact
         uses: actions/download-artifact@v3
         with:
-          path: ./artifact/
+          path: ${{ github.workspace }}/artifact/
 
       - name: note
         shell: python
@@ -110,4 +102,4 @@ jobs:
           body: ${{env.NOTE}}
           prerelease: false
           draft: false
-          files: ./artifact/test-${{ matrix.os }}/*
+          files: ${{ github.workspace }}/artifact/test-${{ matrix.os }}/*
