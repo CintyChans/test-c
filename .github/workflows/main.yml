@@ -65,7 +65,8 @@ jobs:
         
     needs: [deploy]
     steps:
-    
+      - uses: actions/checkout@v3
+      
      #添加windows下vc库依赖
       - name: add  windows vcdll
         if: matrix.os == 'windows-2022' 
