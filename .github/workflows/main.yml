@@ -1,12 +1,9 @@
 name: c++ application
 
 on:
+  workflow_call:
   push:
-    branches: ["main", "test_action","test_vcpkg"]
-    tags:
-      - v[0-9]+.[0-9]+
-      - v[0-9]+.[0-9]+.[0-9]+
-      - v[0-9]+.[0-9]+.[0-9]+.[0-9]+
+    branches: ["main"]
 
 jobs:
   deploy:
@@ -54,28 +51,3 @@ jobs:
           cd build
           ctest --verbose -C Release -T test --output-on-failure
           
-
-        
-    steps:
-      - uses: actions/checkout@v3
-      
-     #添加windows下vc库依赖
-      - name: add  windows vcdll
-        if: matrix.os == 'windows-2022' 
-        run: |
-          copy C:/Windows/system32/msvcp140*  ./build/target/Release
-          copy C:/Windows/system32/vcruntime140*  ./build/target/Release
-          copy C:/Windows/system32/ucrtbase*  ./build/target/Release
-     
-      - name: 7z
-        uses: DuckSoft/create-7z-action@v1.0
-        with:
-          pathSource: .
-          pathTarget: ubuntu-22.04.tar
-
-      #上传打包文件
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-ubuntu-22.04
-          path: ubuntu-22.04.*
