@@ -1,4 +1,4 @@
-name: c++ application
+name: c++ release
 
 on:
   push: 
