@@ -1,3 +1,3 @@
-QT += widgets
-SOURCES += main.cpp
+QT += widgets testlib
+SOURCES += main.cpp test.cpp
 CONFIG += release
