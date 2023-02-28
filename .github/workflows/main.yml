@@ -1,55 +1,27 @@
-name: c++ application
+name: test-qt
 
 on:
   push:
-    branches: ["main", "test_action","test_vcpkg"]
+    branches: ["test_qt"]
 
 jobs:
   job:
-    name: ${{ matrix.os }}-${{ github.workflow }}
-    runs-on: ${{ matrix.os }}
+    name: 'test-qt'
+    runs-on: [windows-latest]
     strategy:
       fail-fast: true
-      matrix:
-        os: [macos-12,ubuntu-22.04,windows-2022]
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: true
+
        
-      - uses: lukka/get-cmake@latest
-        with:
-          cmakeVersion: 3.24.3
-          ninjaVersion:  1.11.1
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.3.2'
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_msvc2019_64'
 
-        
-     
-      - name: run-vcpkg
-        uses: lukka/run-vcpkg@v10
-        id: runvcpkg
-        with:
-          vcpkgDirectory: "${{ github.workspace }}/vcpkg"
-          vcpkgJsonGlob: "vcpkg.json"
-          
-          
-      - name: add pkg-config for macos
-        if: matrix.os == 'macos-12'
-        run:  brew install pkg-config
-
-
-
-      - if: github.ref_type=='tag'
-        
-      - name: Run CMake+vcpkg
-        run: |
-          cmake . -B build -DEXECUTABLE_OUTPUT_PATH=target 
-          cd build
-          cmake --build . --config Release
-
-
-      - name: CTest
-        run: |
-          cd build
-          ctest --verbose -C Release -T test --output-on-failure
-
+    - name: Configure test project on windows
+      run: qmake
