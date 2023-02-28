@@ -27,9 +27,15 @@ jobs:
 
       - name: Configure test project on windows
         run: |
-              nmake clean
-              qmake -config release
+              qmake
               nmake
+              
+      - name: windeployqt 
+        run: |
+          cd release
+          windeployqt main.exe
+          
+        
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
