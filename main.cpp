@@ -1,10 +1,10 @@
-#include<QApplication>
-#include <QMainWindow>
-int main(int argc,char* argv[])
+#include <QCoreApplication>
+int main(int argc, char *argv[])
 {
-
-    QApplication* qa=new QApplication(argc,argv);
-    QMainWindow* qm=new QMainWindow();
-    qm->show();
-    return qa->exec();
+    // 创建核心应用类
+    QCoreApplication a(argc, argv);
+    puts("Hello World QT 6");
+    
+    return a.exec();
 }
+
