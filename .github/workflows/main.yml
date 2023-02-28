@@ -27,10 +27,9 @@ jobs:
 
       - name: Configure test project on windows
         run: |
-          qmake   main.pro
-         
-      - name: make
-        run: nmake 
+              nmake clean
+              qmake -config release
+              nmake
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
