@@ -21,6 +21,8 @@ jobs:
           version: '6.3.2'
           host: 'windows'
           target: 'desktop'
+          set-env: 'true'
+          catch: 'catch'
 
       - name: Configure test project on windows
         run: qmake main.pro
