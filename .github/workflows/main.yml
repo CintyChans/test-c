@@ -24,12 +24,13 @@ jobs:
           host: 'windows'
           target: 'desktop'
           set-env: 'true'
-          catch: 'catch'
 
       - name: Configure test project on windows
         run: |
           qmake   main.pro
-          mingw32-make -f Makefile.Release
+         
+      - name: make
+        run: make 
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
