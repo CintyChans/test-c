@@ -13,9 +13,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: TheMrMilchmann/setup-msvc-dev@v2
-        with:
-          arch: x64
+      - name: Add msbuild to PATH
+        uses: seanmiddleditch/gha-setup-vsdevenv@master
        
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
