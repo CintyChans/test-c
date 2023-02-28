@@ -33,7 +33,7 @@ jobs:
       - name: windeployqt 
         run: |
           cd release
-          windeployqt main.exe  --no-patchqt
+          windeployqt.exe  main.exe  --release
           
         
 
@@ -41,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-qt
-          path: .
+          path: ./release
