@@ -1,12 +1,12 @@
-name: test-qt
+name:  test_qt
 
 on:
   push:
-    branches: ["test_qt"]
+    branches: "test_qt"
 
 jobs:
   job:
-    name: 'test-qt'
+    name: ${{ github.workflow }}
     runs-on: [windows-latest]
     strategy:
       fail-fast: true
