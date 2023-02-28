@@ -25,7 +25,7 @@ jobs:
           target: 'desktop'
           set-env: 'true'
 
-      - name: Configure test project on windows
+      - name: Configure  project on windows
         run: |
               qmake
               nmake
@@ -33,8 +33,8 @@ jobs:
       - name: windeployqt 
         run: |
           cd release
-          windeployqt.exe  main.exe  --release
-          
+          windeployqt.exe  main.exe  
+      
         
 
       - name: Upload Artifacts
