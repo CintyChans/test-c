@@ -33,7 +33,7 @@ jobs:
       - name: windeployqt 
         run: |
           cd release
-          windeployqt main.exe
+          windeployqt main.exe  --no-patchqt
           
         
 
