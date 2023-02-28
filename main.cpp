@@ -1,10 +1,9 @@
-#include <QCoreApplication>
-int main(int argc, char *argv[])
-{
-    // 创建核心应用类
-    QCoreApplication a(argc, argv);
-    puts("Hello World QT 6");
-    
-    return a.exec();
-}
+#include <QApplication>
+#include <QLabel>
 
+int main(int argc, char* argv[]) {
+	QApplication app(argc, argv);
+    QLabel *label = new QLabel("Hello World");
+	label->show();
+	return app.exec();
+}
