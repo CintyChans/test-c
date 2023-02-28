@@ -21,7 +21,6 @@ jobs:
           version: '6.3.2'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_msvc2019_64'
 
       - name: Configure test project on windows
         run: qmake main.pro
