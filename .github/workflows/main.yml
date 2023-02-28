@@ -27,7 +27,7 @@ jobs:
           catch: 'catch'
 
       - name: Configure test project on windows
-        run: qmake main.pro
+        run: qmake -project  main.pro
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
