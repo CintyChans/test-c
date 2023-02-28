@@ -13,9 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: TheMrMilchmann/setup-msvc-dev@v2
-        with:
-          arch: x64
+
        
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
