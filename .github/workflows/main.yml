@@ -30,7 +30,7 @@ jobs:
           qmake   main.pro
          
       - name: make
-        run: make 
+        run: nmake 
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
