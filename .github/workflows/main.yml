@@ -24,7 +24,7 @@ jobs:
           note=[obj[i] for i in obj if i=='${{github.ref_name}}'];note=[note[0] if note else ''][0]
           file=open('releasenotes.txt','w+');
           tmp=[f.write(n.strip()) for n in note ];
-          file.close;
+          file.close();
           
       - run: .\first.ps1
       
