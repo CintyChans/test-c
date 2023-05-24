@@ -2,7 +2,8 @@ name: c++ application
 
 on:
   push:
-    branches: ["main", "test_action","test_vcpkg"]
+    branches: ["test_qtmqtt"]
+
 
 jobs:
   job:
@@ -11,24 +12,43 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [windows-2022]
+        os: [ubuntu-20.04]
 
     steps:
       - uses: actions/checkout@v3
-       
-      - name: note
+        with:
+          submodules: true
+        #cmake安装
+      - uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: 3.24.3
+          ninjaVersion:  1.11.1
 
-        shell: python
+
+        #vcpkg下载所需包
+      - name: run-vcpkg
+        uses: lukka/run-vcpkg@v10
+        id: runvcpkg
+        with:
+          # This one is not needed, as it is the default value anyway.
+          # vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgJsonGlob: "vcpkg.json"
+
+
+
+        #cmake编译
+      - name: Run CMake+vcpkg
         run: |
-          import os;
-          f=open('releasenotes.md',"r");
-          obj={i[0].strip():i[1:] for i in [i.split('-') for i in f.read().split('##')[1:]]};
-          f.close();
-          note=[obj[i] for i in obj if i=='v1.0.3.1'];note=[note[0] if note else ''][0];
-          file=open('releasenotes.txt','w+');
-          tmp=[file.write(n.strip()+'\n') for n in note];
-          file.close();
-          
-      - run: .\first.ps1
-      
-      - run: echo "${{env.Json}}"
+          cmake . -B build -DEXECUTABLE_OUTPUT_PATH=target 
+          cd build
+          cmake --build . --config Release
+      #测试
+    
+      #上传打包文件
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-${{ matrix.os }}
+          path: .
+
+ 
