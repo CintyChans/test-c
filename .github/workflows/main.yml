@@ -7,10 +7,8 @@ on:
 
 jobs:
   job:
-    name: ${{ matrix.os }}-${{ github.workflow }}
-    runs-on: ${{ matrix.os }}
-      matrix:
-        os: [ubuntu-20.04]
+    name: ${{ github.workflow }}
+    runs-on: ubuntu-latest
   
     steps:
       - uses: actions/checkout@v3
@@ -33,7 +31,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: test-mqtt-${{ matrix.os }}
-          path: ./qtmqtt/build/target/Release
+          name: test-mqtt
+          path: ./build/target/Release
 
  
