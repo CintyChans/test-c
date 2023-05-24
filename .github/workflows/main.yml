@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -24,10 +24,7 @@ jobs:
           cmakeVersion: 3.25.1
 
 
-      - run: |
-           cd vcpkg
-           git pull
-           ./bootstrap-vcpkg.sh
+
 
         #vcpkg下载所需包
       - name: run-vcpkg
