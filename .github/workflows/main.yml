@@ -24,6 +24,11 @@ jobs:
           cmakeVersion: 3.25.1
 
 
+      - run: |
+           cd vcpkg
+           git pull
+           ./bootstrap-vcpkg.sh
+
         #vcpkg下载所需包
       - name: run-vcpkg
         uses: lukka/run-vcpkg@v10
