@@ -35,7 +35,7 @@ jobs:
           version: '6.5.0'
           host: 'linux'
           set-env: 'true'
-          archives: 'qtmqtt'
+          archives: 'mqtt'
           
         #cmake编译
       - name: Run CMake+vcpkg
