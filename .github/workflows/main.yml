@@ -24,23 +24,14 @@ jobs:
           cmakeVersion: 3.25.1
   
       - run:  |
-          sudo apt install autoconf-archive
-          sudo apt-get install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
+          git clone https://github.com/qt/qtmqtt.git
 
 
-      
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: '6.5.0'
-          host: 'linux'
-          set-env: 'true'
-          archives: 'mqtt'
+    
           
         #cmake编译
       - name: Run CMake+vcpkg
         run: |
-          vcpkg install qtmqtt
           cmake . -B build -DEXECUTABLE_OUTPUT_PATH=target 
           cd build
           cmake --build . --config Release
