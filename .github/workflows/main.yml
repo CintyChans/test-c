@@ -41,6 +41,7 @@ jobs:
         #cmake编译
       - name: Run CMake+vcpkg
         run: |
+          vcpkg install qtmqtt
           cmake . -B build -DEXECUTABLE_OUTPUT_PATH=target 
           cd build
           cmake --build . --config Release
