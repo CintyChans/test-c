@@ -25,8 +25,7 @@ jobs:
   
       - run:  |
           sudo apt install autoconf-archive
-          sudo apt-get install '^libxcb.*-dev'
-
+          sudo apt-get install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
 
 
         #vcpkg下载所需包
@@ -37,8 +36,6 @@ jobs:
           # This one is not needed, as it is the default value anyway.
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgJsonGlob: "vcpkg.json"
-          runVcpkgInstall: true
-          prependedCacheKey: vcpkginstall
 
 
         #cmake编译
