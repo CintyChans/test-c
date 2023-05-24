@@ -23,7 +23,9 @@ jobs:
         with:
           cmakeVersion: 3.25.1
   
-      - run: sudo apt install autoconf-archive
+      - run:  |
+          sudo apt install autoconf-archive
+          sudo apt-get install '^libxcb.*-dev'
 
 
 
