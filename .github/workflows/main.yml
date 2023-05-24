@@ -21,8 +21,7 @@ jobs:
         #cmake安装
       - uses: lukka/get-cmake@latest
         with:
-          cmakeVersion: 3.24.3
-          ninjaVersion:  1.11.1
+          cmakeVersion: 3.25.1
 
 
         #vcpkg下载所需包
