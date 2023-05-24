@@ -9,39 +9,31 @@ jobs:
   job:
     name: ${{ matrix.os }}-${{ github.workflow }}
     runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
       matrix:
         os: [ubuntu-20.04]
-
+  
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: true
         #cmake安装
       - uses: lukka/get-cmake@latest
-        with:
-          cmakeVersion: 3.25.1
-  
-      - run:  |
-          git clone https://github.com/qt/qtmqtt.git
 
-
-    
+      - name: run-vcpkg
+        run:  |
+          sudo apt-get install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
+          sudo apt install autoconf-archive
+          vcpkg install qtmqtt
           
-        #cmake编译
+          
       - name: Run CMake+vcpkg
         run: |
           cmake . -B build -DEXECUTABLE_OUTPUT_PATH=target 
           cd build
           cmake --build . --config Release
-      #测试
-    
-      #上传打包文件
+          
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: test-${{ matrix.os }}
-          path: .
+          name: test-mqtt-${{ matrix.os }}
+          path: ./qtmqtt/build/target/Release
 
  
