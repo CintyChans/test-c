@@ -1,6 +1,0 @@
-{
-  "dependencies": [
-    "qtbase",
-    "qtmqtt"
-  ]
-}
